@@ -23,21 +23,25 @@ public class CategoriasController {
 
 	@Autowired
 	private CategoriasRepository repository;
-	
+
 	@GetMapping
 	public ResponseEntity<List<Categorias>> list() {
 		return ResponseEntity.ok(repository.findAll());
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<Categorias> add (@RequestBody Categorias categoria) {
+	public ResponseEntity<Categorias> add(@RequestBody Categorias categoria) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(categoria));
 	}
-	
-	@GetMapping("/{id}")
+
+	@GetMapping("/buscarId/{id}")
 	public ResponseEntity<Categorias> getById(@PathVariable long id) {
-		return repository.findById(id).map(obj -> ResponseEntity.ok(obj))
-				.orElse(ResponseEntity.notFound().build());
+		return repository.findById(id).map(obj -> ResponseEntity.ok(obj)).orElse(ResponseEntity.notFound().build());
 	}
-	
+
+	@GetMapping("/buscarDescricao/{descricao}")
+	public ResponseEntity<List<Categorias>> getByDescricao(@PathVariable String descricao) {
+		return ResponseEntity.ok(repository.findAllByDescricaoContainingIgnoreCase(descricao));
+	}
+
 }
