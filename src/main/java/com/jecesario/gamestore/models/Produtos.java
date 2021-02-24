@@ -1,19 +1,16 @@
 package com.jecesario.gamestore.models;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-public class Categorias {
+public class Produtos {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +19,12 @@ public class Categorias {
 	@NotNull
 	private String descricao;
 
-	@OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("categoria")
-	private List<Produtos> produtos;
+	@NotNull
+	private double valor;
+
+	@ManyToOne
+	@JsonIgnoreProperties("produtos")
+	private Categorias categoria;
 
 	public long getId() {
 		return id;
@@ -42,12 +42,19 @@ public class Categorias {
 		this.descricao = descricao;
 	}
 
-	public List<Produtos> getProdutos() {
-		return produtos;
+	public double getValor() {
+		return valor;
 	}
 
-	public void setProdutos(List<Produtos> produtos) {
-		this.produtos = produtos;
+	public void setValor(double valor) {
+		this.valor = valor;
 	}
 
+	public Categorias getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categorias categoria) {
+		this.categoria = categoria;
+	}
 }
