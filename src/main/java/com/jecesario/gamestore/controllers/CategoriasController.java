@@ -45,12 +45,12 @@ public class CategoriasController {
 	public ResponseEntity<List<Categorias>> getByDescricao(@PathVariable String descricao) {
 		return ResponseEntity.ok(repository.findAllByDescricaoContainingIgnoreCase(descricao));
 	}
-	
+
 	@PutMapping
 	public ResponseEntity<Categorias> update(@RequestBody Categorias categoria) {
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(categoria));
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable long id) {
 		repository.deleteById(id);
