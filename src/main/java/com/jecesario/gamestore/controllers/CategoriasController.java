@@ -34,4 +34,10 @@ public class CategoriasController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(categoria));
 	}
 	
+	@GetMapping("/{id}")
+	public ResponseEntity<Categorias> getById(@PathVariable long id) {
+		return repository.findById(id).map(obj -> ResponseEntity.ok(obj))
+				.orElse(ResponseEntity.notFound().build());
+	}
+	
 }
